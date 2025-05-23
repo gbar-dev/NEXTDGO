@@ -1,9 +1,5 @@
 *.sqlite3
 
-# Ignorer les fichiers d'environnement
-.env
-.env.dev
-.env.prod
 __pycache__/
 *.pyc
 venv/
