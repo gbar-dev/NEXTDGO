@@ -1,0 +1,55 @@
+services:
+  backend:
+    container_name: backend 
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.development
+    command: >
+      sh -c "python manage.py makemigrations && 
+             python manage.py migrate &&
+             python manage.py update_rates &&
+             python manage.py runserver 0.0.0.0:8000"
+    networks:
+      - app-network
+  
+  frontend:
+    container_name: frontend
+    build:
+      args:
+        NODE_ENV: development
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_SECRET_API_KEY: ${SECRET_API_KEY}
+      NEXTAUTH_SECRET: ${SECRET_KEY}
+      NODE_ENV: development
+    
+    networks:
+      - app-network
+    command: > 
+      npm run dev
+  celery:
+    container_name: celery_dev
+    
+    environment:
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASSWORD}@redis:6379/0
+    networks:
+      - app-network
+  celery-beat:
+    environment:
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASSWORD}@redis:6379/0
+    networks:
+      - app-network
+  db:
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+  redis:
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
