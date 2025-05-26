@@ -1,1 +1,0 @@
-Django Backend, Next V-15 and PosgresSQL and Devops Folder
