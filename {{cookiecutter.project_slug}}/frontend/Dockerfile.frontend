@@ -1,0 +1,17 @@
+# Étape 1 : Construire les fichiers statiques de Next.js
+FROM node:18-slim 
+
+WORKDIR /app
+
+# Copier package.json et package-lock.json pour installer les dépendances
+COPY package*.json  ./
+
+# Installer les dépendances
+RUN npm install
+
+# Copier le reste du code source
+COPY . .
+
+# Ouvrir le port pour le serveur (par défaut 3000 dans Next.js)
+EXPOSE 3000
+

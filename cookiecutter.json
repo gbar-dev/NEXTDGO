@@ -1,0 +1,9 @@
+{
+  "DOMAIN": "nextdgo.com",
+  "project_slug": "NEXTDGO",
+  "POSTGRES_ROOT_PASSWORD": "root",
+  "POSTGRES_USER": "postgres",
+  "POSTGRES_PASSWORD": "",
+  "POSTGRES_DB": "my_database",
+  "SECRET_KEY": "Leave empty to autogenerate a secure secret key"
+}

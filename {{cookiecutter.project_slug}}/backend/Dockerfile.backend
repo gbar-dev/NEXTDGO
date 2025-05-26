@@ -1,0 +1,16 @@
+FROM python:3.13-alpine
+
+# Empêcher la création de fichiers .pyc et améliorer l'affichage des logs
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Mettre à jour les index des dépôts et installer bash, mariadb-dev, build-base, et pkgconfig
+RUN apk update && apk add --no-cache bash mariadb-dev build-base pkgconfig
+
+# Définir le répertoire de travail à l'intérieur du conteneur
+WORKDIR /app
+
+# Copier uniquement le fichier requirements.txt pour installer les dépendance
+COPY requirements.txt /app/
+
+RUN pip install --no-cache-dir -r /app/requirements.txt
